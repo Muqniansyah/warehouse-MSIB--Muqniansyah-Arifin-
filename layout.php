@@ -27,6 +27,10 @@
                     <a class="nav-link" href="view-create.php">Create Data</a>
                 </li>
             </ul>
+
+            <form class="d-flex" role="search" method="GET" action="index.php">
+                <input class="form-control me-3" type="search" name="search" placeholder="Search" aria-label="Search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+            </form>
         </div>
     </div>
 </nav>

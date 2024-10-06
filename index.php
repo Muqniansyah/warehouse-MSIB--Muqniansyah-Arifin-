@@ -11,9 +11,19 @@ $db = $database -> getConnection();
 // Membuat objek data gudang
 $datas = new Datas($db);
 
-// Membaca data data gudang
-$stmt = $datas->read();
-$num = $stmt->rowCount(); // mengembalikan jumlah baris yang dikembalikan oleh query (banyak data yang ditemukan).
+// Tangkap pencarian dari parameter GET (jika ada)
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Modifikasi query berdasarkan pencarian
+if (!empty($search)) {
+    // Query dengan filter pencarian
+    $stmt = $datas->search($search);
+} else {
+    // Query default jika tidak ada pencarian
+    $stmt = $datas->read();
+}
+
+$num = $stmt->rowCount(); // Menghitung jumlah data yang ditemukan.
 
 // contoh data dynamic
 $title = "Daftar Pelanggan";
@@ -28,7 +38,7 @@ ob_start();
 // Assuming you already have $stmt from your query
 if ($num > 0) {
     echo "<table class='table table-bordered'>";
-    echo "<thead class='table-secondary'><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Waktu Buka</th><th>Waktu Tutup</th><th>Aksi</th></tr></thead>";
+    echo "<thead class='table-secondary'><tr><th>ID</th><th>Name</th><th>Location</th><th>Capacity</th><th>Status</th><th>Waktu Buka</th><th>Waktu Tutup</th><th>Aksi</th></tr></thead>";
     echo "<tbody>";
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

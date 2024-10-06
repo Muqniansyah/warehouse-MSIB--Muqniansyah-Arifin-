@@ -103,5 +103,25 @@ class Datas {
 
         return $stmt;
     }
+
+    // Fungsi untuk melakukan pencarian
+    public function search($keyword) {
+        // Query untuk mencari berdasarkan name, location, atau capacity
+        $query = "SELECT * FROM " . $this->table_name . " WHERE name LIKE :keyword OR location LIKE :keyword OR capacity LIKE :keyword";
+
+        // Menyiapkan statement
+        $stmt = $this->conn->prepare($query);
+
+        // Menambahkan karakter wildcard untuk pencarian
+        $keyword = "%{$keyword}%";
+
+        // Mengikat parameter
+        $stmt->bindParam(':keyword', $keyword);
+
+        // Eksekusi query
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
 ?>

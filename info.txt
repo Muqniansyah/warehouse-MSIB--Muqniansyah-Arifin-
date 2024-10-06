@@ -1,0 +1,3 @@
+// Membaca data data gudang
+$stmt = $datas->read();
+$num = $stmt->rowCount(); // mengembalikan jumlah baris yang dikembalikan oleh query (banyak data yang ditemukan).
