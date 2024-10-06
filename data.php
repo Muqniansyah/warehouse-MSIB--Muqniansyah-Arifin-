@@ -16,6 +16,14 @@ class Datas {
         $this ->conn = $db;
     }
 
+    // membaca data dari database
+    public function read(){
+        $stmt = $this->conn->prepare("SELECT id, name, location, capacity, status, opening_hour, closing_hour FROM ". $this->table_name);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     //  menambahkan data ke database
     public function create(){
         // memasukkan nilai kedalam tabel
@@ -38,15 +46,27 @@ class Datas {
 
     }
 
-    // membaca data dari database
-    public function read(){
-        $stmt = $this->conn->prepare("SELECT id, name, location, capacity, status, opening_hour, closing_hour FROM ". $this->table_name);
-        $stmt->execute();
+    // mengahpus data berdasarkan id 
+    public function delete(){
+        $stmt = $this->conn->prepare("DELETE FROM ". $this->table_name ." WHERE id=:id");
+        $stmt->bindParam(":id", $this->id);
+        
+        // jika berhasil dijalankan
+        if ($stmt->execute()) {
+            return true;
+        }   
 
-        return $stmt;
+        // jika gagal dijalankan
+        return false;
     }
 
-    
+    // reset auto increment
+    public function reset_auto_increment() {
+        // Atur ulang id dan auto increment
+        // gunakan exec() untuk query yang tidak membutuhkan hasil return.
+        $this->conn->exec("SET @num := 0;");
+        $this->conn->exec("UPDATE $this->table_name SET id = @num := (@num+1);");
+        $this->conn->exec("ALTER TABLE $this->table_name AUTO_INCREMENT = 1;");
+    } 
 }
-
 ?>

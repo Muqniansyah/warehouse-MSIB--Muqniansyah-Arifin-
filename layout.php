@@ -6,11 +6,6 @@
     <title><?= $title ?? 'My Website' ?></title>
     <!-- css boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- my css -->
-    <style>
-       
-    </style>
 </head>
 <body>
 <!-- Navbar Start -->
@@ -37,7 +32,7 @@
 
 <!-- Halaman Content -->
 <div class="container">
-    <div class="content mt-3">
+    <div class="content mt-5">
         <?= $content ?>
     </div>
 </div>

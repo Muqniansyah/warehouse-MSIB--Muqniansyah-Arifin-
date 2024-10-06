@@ -28,7 +28,7 @@ ob_start();
 // Assuming you already have $stmt from your query
 if ($num > 0) {
     echo "<table class='table table-bordered'>";
-    echo "<thead class='table-dark'><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Aksi</th><th>Waktu Buka</th><th>Waktu Tutup</th></tr></thead>";
+    echo "<thead class='table-secondary'><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Waktu Buka</th><th>Waktu Tutup</th><th>Aksi</th></tr></thead>";
     echo "<tbody>";
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -42,6 +42,9 @@ if ($num > 0) {
         echo "<td>{$status}</td>";
         echo "<td>{$opening_hour}</td>"; 
         echo "<td>{$closing_hour}</td>"; 
+        echo "<td>";
+        echo "<a href='delete.php?id={$id}' class='btn btn-sm btn-danger' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a>";
+        echo "</td>";
         echo "</tr>";
     }
     echo "</tbody>";
