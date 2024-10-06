@@ -43,7 +43,8 @@ if ($num > 0) {
         echo "<td>{$opening_hour}</td>"; 
         echo "<td>{$closing_hour}</td>"; 
         echo "<td>";
-        echo "<a href='delete.php?id={$id}' class='btn btn-sm btn-danger' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a>";
+        echo "<a href='view-edit.php?id={$id}' class='btn btn-sm btn-secondary'><i class='bi bi-pencil'></i></a> ";
+        echo "<a href='delete.php?id={$id}' class='btn btn-sm btn-danger' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'><i class='bi bi-trash'></i></a>";
         echo "</td>";
         echo "</tr>";
     }

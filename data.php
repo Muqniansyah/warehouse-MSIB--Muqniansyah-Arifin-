@@ -68,5 +68,40 @@ class Datas {
         $this->conn->exec("UPDATE $this->table_name SET id = @num := (@num+1);");
         $this->conn->exec("ALTER TABLE $this->table_name AUTO_INCREMENT = 1;");
     } 
+
+    // memperbarui data gudang berdasarkan id
+    public function update(){
+        // mengubah kolom berdasarkan id tertentu
+        $stmt = $this->conn->prepare("UPDATE ". $this->table_name ." SET name=:name, location=:location, capacity=:capacity, status=:status, opening_hour=:opening_hour, closing_hour=:closing_hour WHERE id=:id");
+        
+        // mengikat nilai dari objek class/objek yang dibuat dari sebuah class
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":location", $this->location);
+        $stmt->bindParam(":capacity", $this->capacity);
+        $stmt->bindParam(":status", $this->status);
+        $stmt->bindParam(":opening_hour", $this->waktu_buka);
+        $stmt->bindParam(":closing_hour", $this->waktu_tutup);
+
+        // jika berhasil dijalankan
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        // jika gagal dijalankan
+        return false;
+    }
+
+    // untuk mendapatkan data dari database berdasarkan id tertentu.
+    public function show($id){
+        // mengambil data dengan id
+        $stmt = $this->conn->prepare("SELECT id, name, location, capacity, status, opening_hour, closing_hour FROM ". $this->table_name ." WHERE id=:id");
+        
+        // mengikat parameter id dengan nilai yang diberikan dan dijalankan/eksekusi dengan execute()
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
 ?>
