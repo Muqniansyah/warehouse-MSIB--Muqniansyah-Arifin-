@@ -55,6 +55,16 @@ if ($num > 0) {
         echo "<td>";
         echo "<a href='view-edit.php?id={$id}' class='btn btn-sm btn-secondary'><i class='bi bi-pencil'></i></a> ";
         echo "<a href='delete.php?id={$id}' class='btn btn-sm btn-danger' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'><i class='bi bi-trash'></i></a>";
+        
+        // Form untuk ubah status
+        echo "<form action='change-status.php' method='post' style='display:inline-block;'>";
+        echo "<input type='hidden' name='id' value='{$id}'>";
+        echo "<input type='hidden' name='current_status' value='{$status}'>";  // Kirim status saat ini
+        echo "<button type='submit' class='btn btn-sm btn-dark ms-2'>";
+        echo ($status === 'aktif') ? 'tidak_aktif' : 'aktif';  // Ubah teks tombol berdasarkan status
+        echo "</button>";
+        echo "</form>";
+        
         echo "</td>";
         echo "</tr>";
     }

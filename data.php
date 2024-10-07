@@ -123,5 +123,21 @@ class Datas {
 
         return $stmt;
     }
+
+    // untuk memperbarui status berdasarkan id
+    public function updateStatus() {
+        // Mengubah status berdasarkan id
+        $stmt = $this->conn->prepare("UPDATE " . $this->table_name . " SET status=:status WHERE id=:id");
+
+        // Mengikat parameter
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":status", $this->status);
+
+        // Menjalankan query
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;   
+    }
 }
 ?>
