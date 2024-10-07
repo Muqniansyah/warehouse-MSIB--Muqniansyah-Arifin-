@@ -25,6 +25,34 @@ if (!empty($search)) {
 
 $num = $stmt->rowCount(); // Menghitung jumlah data yang ditemukan.
 
+// Tentukan jumlah data per halaman
+$records_per_page = 5;
+
+// Tentukan halaman saat ini (default ke halaman 1 jika tidak ada parameter 'page')
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+// Validasi halaman
+if ($page < 1) {
+    $page = 1; // Jika halaman kurang dari 1, set ke 1
+}
+
+// Hitung offset
+$offset = ($page - 1) * $records_per_page;
+
+// Query untuk menghitung total jumlah data
+$total_records_query = $db->query("SELECT COUNT(*) FROM gudang");
+$total_records = $total_records_query->fetchColumn();
+
+// Hitung jumlah total halaman
+$total_pages = ceil($total_records / $records_per_page);
+
+// Query untuk mengambil data sesuai dengan pagination
+$query = "SELECT * FROM gudang LIMIT :offset, :records_per_page"; // Ubah bagian ini
+$stmt = $db->prepare($query);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->bindValue(':records_per_page', $records_per_page, PDO::PARAM_INT);
+$stmt->execute();
+
 // contoh data dynamic
 $title = "Daftar Pelanggan";
 
@@ -70,6 +98,30 @@ if ($num > 0) {
     }
     echo "</tbody>";
     echo "</table>";
+
+    // Menampilkan pagination
+    echo '<nav aria-label="Page navigation example">';
+    echo '<ul class="pagination justify-content-center">';
+
+    // Tombol Previous
+    echo '<li class="page-item ' . ($page <= 1 ? 'disabled' : '') . '">';
+    echo '<a class="page-link" href="?page=' . ($page - 1) . '">Previous</a>';
+    echo '</li>';
+
+    // Link ke setiap halaman
+    for ($i = 1; $i <= $total_pages; $i++) {
+        echo '<li class="page-item ' . ($i == $page ? 'active' : '') . '">';
+        echo '<a class="page-link" href="?page=' . $i . '">' . $i . '</a>';
+        echo '</li>';
+    }
+
+    // Tombol Next
+    echo '<li class="page-item ' . ($page >= $total_pages ? 'disabled' : '') . '">';
+    echo '<a class="page-link" href="?page=' . ($page + 1) . '">Next</a>';
+    echo '</li>';
+
+    echo '</ul>';
+    echo '</nav>';
 } else {
     echo "<p class='alert alert-info'>Tidak ada data pelanggan.</p>";
 }
