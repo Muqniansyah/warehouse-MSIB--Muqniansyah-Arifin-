@@ -19,7 +19,7 @@ if (!empty($search)) {
     // Query dengan filter pencarian
     $stmt = $datas->search($search);
 } else {
-    // Query default jika tidak ada pencarian
+    // Query default jika tidak ada pencarian yaitu membaca data data gudang
     $stmt = $datas->read();
 }
 
@@ -70,4 +70,3 @@ $content = ob_get_clean();
 // Sertakan templat tata letak dan teruskan kontennya
 include 'layout.php';
 ?>
-
