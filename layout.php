@@ -37,7 +37,7 @@
 <!-- Navbar End -->
 
 <!-- Halaman Content Start -->
-<div class="container">
+<div class="container mb-5">
     <div class="content mt-5">
         <?= $content ?>
     </div>
